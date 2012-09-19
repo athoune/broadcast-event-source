@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -13,7 +14,24 @@ func blunderServer(w http.ResponseWriter, req *http.Request) {
 	h.Set("Connection", "keep-alive")
 	h.Set("X-Accel-Buffering", "no")
 	w.WriteHeader(200)
-
+	channel := Suscribe()
+	defer func() {
+		log.Println("Closing http connection closes is channel.")
+		/*FIMXE finding how to close channel when curl make a ctrl-C*/
+		channel.Leave()
+	}()
+	f, f_ok := w.(http.Flusher)
+	if f_ok {
+		f.Flush()
+	}
+	for {
+		m := <-channel.channel
+		msg := fmt.Sprintf("data: %s\r\n", m)
+		w.Write([]byte(msg))
+		if f_ok {
+			f.Flush()
+		}
+	}
 }
 
 func startHttp() {
@@ -23,5 +41,4 @@ func startHttp() {
 	if err != nil {
 		panic(err)
 	}
-
 }
