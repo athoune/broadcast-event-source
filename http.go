@@ -36,6 +36,7 @@ func blunderServer(w http.ResponseWriter, req *http.Request) {
 
 func startHttp() {
 	http.HandleFunc("/blunder", blunderServer)
+	http.Handle("/", http.FileServer(http.Dir("static")))
 	log.Printf("About to start http://localhost:8000")
 	err := http.ListenAndServe("localhost:8000", nil)
 	if err != nil {
