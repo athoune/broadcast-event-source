@@ -21,16 +21,19 @@ func blunderServer(w http.ResponseWriter, req *http.Request) {
 		channel.Leave()
 	}()
 	f, f_ok := w.(http.Flusher)
+	log.Println(f_ok)
 	if f_ok {
 		f.Flush()
 	}
 	for {
 		m := <-channel.channel
-		msg := fmt.Sprintf("data: %s\r\n", m)
+		msg := fmt.Sprintf("data: %s\n\n", m) // message brings its own \n
 		w.Write([]byte(msg))
 		if f_ok {
 			f.Flush()
 		}
+		log.Println("One event")
+		log.Println(msg)
 	}
 }
 
