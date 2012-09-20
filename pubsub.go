@@ -5,36 +5,43 @@ import (
 	"sync"
 )
 
-var clientCount = 0
-var clientsLock sync.RWMutex
-var clients map[int]chan string = make(map[int]chan string)
+var subscriber = &subscriptions{
+	count:   0,
+	clients: make(map[int]chan string),
+}
+
+type subscriptions struct {
+	count   int
+	clients map[int]chan string
+	sync.RWMutex
+}
 
 type client struct {
 	id      int
 	channel chan string
 }
 
-func Suscribe() client {
-	clientsLock.Lock()
-	defer clientsLock.Unlock()
-	clientCount += 1
+func Subscribe() client {
+	subscriber.Lock()
+	defer subscriber.Unlock()
+	subscriber.count += 1
 	ch := make(chan string)
-	clients[clientCount] = ch
-	cl := client{clientCount, ch}
+	subscriber.clients[subscriber.count] = ch
+	cl := client{subscriber.count, ch}
 	return cl
 }
 
 func (c *client) Leave() {
-	clientsLock.Lock()
-	defer clientsLock.Unlock()
-	delete(clients, c.id)
+	subscriber.Lock()
+	defer subscriber.Unlock()
+	delete(subscriber.clients, c.id)
 	close(c.channel)
 }
 
 func Publish(m string) {
-	clientsLock.RLock()
-	defer clientsLock.RUnlock()
-	for i := range clients {
-		clients[i] <- m
+	subscriber.RLock()
+	defer subscriber.RUnlock()
+	for i := range subscriber.clients {
+		subscriber.clients[i] <- m
 	}
 }
