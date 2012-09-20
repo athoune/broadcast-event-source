@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 )
 
 func startSocket() {
@@ -32,7 +33,7 @@ func doServeStuff(conn net.Conn) {
 			fmt.Println("error reading", err.Error())
 			return
 		}
-		Publish(string(buf))
+		Publish(strings.TrimSpace(string(buf)))
 		conn.Write([]byte("ok\n"))
 	}
 }
