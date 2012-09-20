@@ -14,7 +14,7 @@ func blunderServer(w http.ResponseWriter, req *http.Request) {
 	h.Set("Connection", "keep-alive")
 	h.Set("X-Accel-Buffering", "no") // For Nginx
 	w.WriteHeader(200)
-	channel := Suscribe()
+	channel := Subscribe()
 	defer func() {
 		log.Println("Closing http connection closes is channel.")
 		/*FIMXE finding how to close channel when curl make a ctrl-C*/
