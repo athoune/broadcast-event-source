@@ -13,7 +13,7 @@ Build
 Test it
 -------
 
-    ./blunderbluss
+    ./go-broadcast-event-source
 
 Lauch some curls :
 
