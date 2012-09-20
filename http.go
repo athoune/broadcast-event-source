@@ -12,7 +12,7 @@ func blunderServer(w http.ResponseWriter, req *http.Request) {
 	h.Set("Transfer-Encoding", "chunked")
 	h.Set("Cache-Control", "no-cache")
 	h.Set("Connection", "keep-alive")
-	h.Set("X-Accel-Buffering", "no")
+	h.Set("X-Accel-Buffering", "no") // For Nginx
 	w.WriteHeader(200)
 	channel := Suscribe()
 	defer func() {

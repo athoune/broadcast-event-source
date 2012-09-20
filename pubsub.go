@@ -1,4 +1,5 @@
 package main
+
 /* Stolen from https://github.com/bitly/go-notify/blob/master/notify.go */
 import (
 	"sync"
