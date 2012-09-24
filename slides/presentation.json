@@ -1,6 +1,7 @@
 {
   "title": "Blunderbluss",
   "duration": 20,
+  "theme": "CSSS",
   "sections": {
       "main":"Pedagogical example for golang"
   }
