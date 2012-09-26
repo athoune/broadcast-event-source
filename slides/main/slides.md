@@ -190,7 +190,7 @@ Channel is a pipe, you pull something one side, and pull it in the other side.
 
 Channel blocks on put (waits for a receiver), but there is also buffered channel,
 with some room to fill before blocking.
-
+)
 ```go
 for {
 	m := <-channel.channel
@@ -213,7 +213,7 @@ Or waiting for Java 5.
 There is reference and pointer in Go, but no tricks.
 
 When you launch your application, you ask why there is so few cores
-in this computer, and so many useless memory
+in this computer, and so many useless memory.
 
 !SLIDE
 # Where go fits well?
@@ -227,5 +227,5 @@ Go is young, pioneer still exist. Your brain is large enough to handle most of i
 * Use go when java is needed but Eclipse is not installed. Be careful, nobody can beat java libraries.
 * Don't use go when C++ is needed, because C++ developer only fall in love one time.
 
-Go is low level, loves parralel task, doesn't have so many libraries.
-Use it for network services or tasks.
+Go is low level, loves parralel tasks, doesn't have so many libraries.
+Use it for network tasks (client or server).
